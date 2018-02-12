@@ -1,0 +1,22 @@
+extends layout
+
+include mixins/_listingInfo
+
+block content
+  section(class="container")
+    div(class="form-container col-md-offset-2 col-md-8 col-xs-12")
+      div(class="row")
+        div(class="col-md-10 col-md-offset-1 col-xs-12")
+          div(class="listing-group")
+            img(class="card-img-top" src="/images/photo0.jpeg" alt="")
+            h1(class="text-uppercase") #{listing.name}
+              h3(class="text-uppercase text-faded")
+      +listingInfo('Description', listing.description)
+
+      div(class="row")
+        div(class="col-md-10 col-md-offset-1 col-xs-12")
+          a(href=`/listing/${listing.id}/edit`)
+            button(class="btn btn-info btn-lg icon-wrapper") Modify
+          form(action=`/delete-listing` method="POST")
+            input(type="hidden" name="_csrf" value= csrfToken)
+            button(class="btn btn-danger btn-lg icon-wrapper" name='id' value=`${listing.id}`) Delete
