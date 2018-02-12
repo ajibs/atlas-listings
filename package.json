@@ -1,12 +1,10 @@
 {
-  "name": "bestbiz",
+  "name": "business-listings",
   "version": "0.0.1",
   "main": "start.js",
   "scripts": {
     "start": "node ./start.js",
-    "watch": "nodemon ./start.js --ignore public",
-    "assets": "webpack -w --display-max-modules 0",
-    "dev": "concurrently \"npm run watch\" \"npm run assets\" --names \"💻,📦\""
+    "dev": "nodemon ./start.js"
   },
   "engines": {
     "node": "8.9.4"
@@ -26,18 +24,9 @@
     "redis": "^2.8.0"
   },
   "devDependencies": {
-    "babel-core": "^6.26.0",
-    "babel-loader": "^7.1.2",
-    "babel-preset-env": "^1.6.1",
-    "concurrently": "^3.5.0",
-    "css-loader": "^0.28.7",
-    "cssnano": "^3.10.0",
     "eslint": "^4.11.0",
     "eslint-config-airbnb-base": "^12.1.0",
     "eslint-plugin-import": "^2.8.0",
-    "extract-text-webpack-plugin": "^3.0.2",
-    "nodemon": "^1.12.0",
-    "optimize-css-assets-webpack-plugin": "^3.2.0",
-    "webpack": "^3.8.1"
+    "nodemon": "^1.12.0"
   }
 }

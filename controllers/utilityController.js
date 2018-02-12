@@ -10,24 +10,23 @@ const DOMPurify = createDOMPurify(window);
 
 
 exports.validateListing = (req, res, next) => {
-  console.log('validating listing');
+  req.checkBody('id', 'You must supply an ID!').notEmpty();
   req.checkBody('name', 'You must supply a name!').notEmpty();
   req.checkBody('description', 'Description cannot be blank!').notEmpty();
 
   const errors = req.validationErrors();
   if (errors) {
-    res.render('create-listing', {
-      title: 'Create Listing',
-      body: req.body
+    res.json({
+      status: 400,
+      message: 'Error! You must supply an id, name and description'
     });
-    return; // stop the fn running
+    return;
   }
-  next(); // there were no errors
+  next();
 };
 
 
 exports.sanitizeData = (req, res, next) => {
-  console.log('sanitizing data');
   if (req.query.q) {
     req.body = req.query;
   }
@@ -41,6 +40,13 @@ exports.sanitizeData = (req, res, next) => {
 
 exports.clean = data => DOMPurify.sanitize(data);
 
+
+exports.notFound = (req, res) => {
+  res.json({
+    status: 404,
+    message: 'Page does not exist'
+  });
+};
 
 // create demo data
 exports.seedDB = async (req, res) => {
@@ -58,11 +64,16 @@ exports.seedDB = async (req, res) => {
       'description', company.description
     ], (err, reply) => {
       if (err) {
-        console.log(err);
+        res.json({
+          status: 400,
+          message: 'database seeding unsuccessful'
+        });
       }
-      console.log(reply);
+      res.json({
+        status: 200,
+        message: 'database seeded successfully',
+        data: reply
+      });
     });
   });
-
-  res.redirect('/');
 };

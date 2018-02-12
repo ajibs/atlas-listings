@@ -1,53 +1,42 @@
 const express = require('express');
 const listingController = require('../controllers/listingController');
 const utilityController = require('../controllers/utilityController');
-const { catchErrors } = require('../handlers/errorHandlers');
 
 const router = express.Router();
 
-
-router.get('/', listingController.showHome);
-
 // create listing
-router.get(
-  '/create-listing',
-  listingController.showListingForm
-);
 router.post(
   '/create-listing',
   utilityController.validateListing,
   utilityController.sanitizeData,
   listingController.addListing
 );
-
 
 // view listing
-router.get('/listing/:id', listingController.showSingleListing);
-
+router.get(
+  '/listing/:id',
+  listingController.showSingleListing
+);
 
 // update listing
-router.get(
-  '/listing/:id/edit',
-  listingController.showEditListing
-);
-router.post(
-  '/create-listing/:id',
+router.put(
+  '/update-listing/:id',
   utilityController.validateListing,
   utilityController.sanitizeData,
   listingController.addListing
 );
 
-
 // delete listing
-router.post(
-  '/delete-listing',
+router.delete(
+  '/delete-listing/:id',
   utilityController.sanitizeData,
   listingController.deleteListing
 );
 
+// seed database
+router.get('/seed', utilityController.seedDB);
 
-// TODO: comment out route
-// router.get('/seed', catchErrors(utilityController.seedDB));
-
+// 404 page
+router.get('*', utilityController.notFound);
 
 module.exports = router;
