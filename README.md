@@ -1,6 +1,5 @@
-# Listings
-CRUD API built with Node.js and Redis for database
-
+# Atlas Listings
+CRUD RESTful API built with Node.js and Redis for database
 
 ## Feature List
 * Seed Database
